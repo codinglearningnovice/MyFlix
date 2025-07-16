@@ -1,0 +1,6 @@
+@MyFlixBackendc__HostAddress = http://localhost:5268
+
+GET {{MyFlixBackendc__HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
