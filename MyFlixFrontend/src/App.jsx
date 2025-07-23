@@ -1,22 +1,27 @@
-import { useState } from "react";
-import requests from "./request";
-import Row from "./Rows";
 import "./App.css";
 import React from "react";
-import Banner from "./Banner";
-import Nav from "./Nav";
+import Home from "./Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Search from "./Search";
+import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   return (
-    <div>
-      <Nav/>
-      <Banner/>
-      <Row title="Trending Now" fetchUrl={requests.getTrending} isLargeRow />
-      <Row title="Now Playing" fetchUrl={requests.getNowPlaying} />
-      <Row title="Popular" fetchUrl={requests.getPopular} />
-      <Row title="Upcoming" fetchUrl={requests.getUpcoming} />
-      <Row title="Airing Today" fetchUrl={requests.getAiringToday} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+      <Routes>
+        <Route path="/search" element={<Search />} />
+      </Routes>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -31,12 +31,28 @@ namespace MyFlixBackendc_.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<TokenResponseDto>> Login(UserDto request)
         {
-           var token = await authService.LoginAsync(request);
-            if (token == null)
+            var tokenResponse = await authService.LoginAsync(request);
+            if (tokenResponse == null)
+                return Unauthorized();
+
+            
+            Response.Cookies.Append("refreshToken", tokenResponse.RefreshToken, new CookieOptions
             {
-                return BadRequest("Invalid credentials.");
-            }
-            return Ok(token); 
+                HttpOnly = true,                 
+                Secure = true,                   
+                SameSite = SameSiteMode.Strict, 
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+
+            tokenResponse.RefreshToken = null;
+            return Ok(tokenResponse);
+
+            /*var token = await authService.LoginAsync(request);
+             if (token == null)
+             {
+                 return BadRequest("Invalid credentials.");
+             }
+             return Ok(token); */
         }
 
         [HttpPost("refresh-token")]
@@ -49,6 +65,7 @@ namespace MyFlixBackendc_.Controllers
             }
             return Ok(result);
         }
+
         [Authorize] // Ensure this is imported from Microsoft.AspNetCore.Authorization
         [HttpGet("authenticated")]
         public IActionResult AuthenticatedEndPoints()

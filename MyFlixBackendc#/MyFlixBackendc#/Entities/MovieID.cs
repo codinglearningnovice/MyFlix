@@ -6,9 +6,14 @@ namespace MyFlixBackendc_.Entities
     {
         [Key]
         public Guid ID { get; set; }
-          
+
         [Required]
         [StringLength(100)]
         public string MovieId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Username{ get; set; } 
+
     }
 }

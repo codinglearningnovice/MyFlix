@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import requests from "./request";
 import "./Banner.css"
+import {useNavigate}  from "react-router";
 
 function Banner() {
   const [movie, setMovie] = useState([]);
@@ -23,6 +24,12 @@ function Banner() {
   function truncate(str,n) {
     return str?.length > n? str.substr(0,n-1) + "..." : str;
   }
+
+  function myList() {
+    const navigate = useNavigate(); 
+    navigate("/mylist");
+   
+  }
   return (
     <header
       className="banner"
@@ -38,7 +45,7 @@ function Banner() {
         </h1>
         <div className="banner_buttons">
           <button className="banner_button">Play</button>
-          <button className="banner_button">My List</button>
+          <button className="banner_button" onClick={()=>{myList}}>My List</button>
         </div>
         <h1 className="banner_description">{truncate(movie?.overview, 150)}</h1>
       </div>

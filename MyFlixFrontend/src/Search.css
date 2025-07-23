@@ -1,0 +1,18 @@
+.search_poster {
+  object-fit: contain;
+  width: 200px; /* give it a defined size */
+  max-height: 250px;
+  margin: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.search_poster:hover {
+  transform: scale(1.05);
+}
+
+.search {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 80px;
+}

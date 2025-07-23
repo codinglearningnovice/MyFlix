@@ -34,9 +34,10 @@ namespace MyFlixBackendc_.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFavouriteMovie([FromBody] MovieID movieId)
-        {
-            if (movieId == null || string.IsNullOrEmpty(movieId.MovieId))
+        public async Task<IActionResult> AddFavouriteMovie([FromBody] MovieID movie )
+        {    
+            Console.WriteLine("Adding movie to favourites: " + movie);
+            if (movie == null)
             {
                 return BadRequest("Invalid movie ID.");
             }
@@ -44,16 +45,16 @@ namespace MyFlixBackendc_.Controllers
             try
             {
                 
-                var exists = await dbcontext.MovieIDs.AnyAsync(m => m.MovieId == movieId.MovieId);
+                var exists = await dbcontext.MovieIDs.AnyAsync(m => m.MovieId == movie.MovieId);
                 if (exists)
                 {
                     return Conflict("Movie already exists in favourites.");
                 }
 
-                dbcontext.MovieIDs.Add(movieId);
+                dbcontext.MovieIDs.Add(movie);
                 await dbcontext.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetFavouriteMovie), new { id = movieId.ID }, movieId);
+                return CreatedAtAction(nameof(GetFavouriteMovie), new { id = movie.ID }, movie);
             }
             catch (Exception e)
             {

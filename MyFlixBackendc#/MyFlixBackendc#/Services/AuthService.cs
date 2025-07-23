@@ -65,12 +65,18 @@ namespace MyFlixBackendc_.Services
 
         private async Task<TokenResponseDto> CreateTokenResponse(User user)
         {
-            
+           var AccessToken = CreateToken(user);
+            var RefreshToken = await GenerateAndSaveRefreshToken(user);
             var response = new TokenResponseDto
+            {
+                AccessToken = AccessToken,
+                RefreshToken = RefreshToken
+            };
+            /*var response = new TokenResponseDto
             {
                 AccessToken = CreateToken(user),
                 RefreshToken = await GenerateAndSaveRefreshToken(user)
-            };
+            };*/
             return response;
         }
         public async Task<TokenResponseDto?> RefreshTokenAsync(RefreshTokenDto request)
